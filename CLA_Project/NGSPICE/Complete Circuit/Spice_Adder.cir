@@ -1,0 +1,170 @@
+.include TSMC_180nm.txt
+.param LAMBDA = 0.09u
+.param Wn = 1.8u
+.param Wp = 3.6u
+.param SUPPLY = 1.8
+.global gnd vdd
+
+Vdd vdd gnd 'SUPPLY'
+
+vin_a1 a1 0 pulse (0 1.8 0ns 0ps 0ps 5ns 10ns) DC 0
+vin_a2 a2 0 pulse (0 1.8 0ns 0ps 0ps 5ns 10ns) DC 0
+vin_a3 a3 0 pulse (1.8 0 0ns 0ps 0ps 5ns 10ns) DC 1.8
+vin_a4 a4 0 pulse (1.8 0 0ns 0ps 0ps 5ns 10ns) DC 1.8
+
+vin_b1 b1 0 pulse (0 1.8 0ns 0ps 0ps 5ns 10ns) DC 0
+vin_b2 b2 0 pulse (1.8 0 0ns 0ps 0ps 5ns 10ns) DC 1.8
+vin_b3 b3 0 pulse (0 1.8 0ns 0ps 0ps 5ns 10ns) DC 0
+vin_b4 b4 0 pulse (1.8 0 0ns 0ps 0ps 5ns 10ns) DC 1.8
+
+vin_c1 c1 0 pulse (0 1.8 0ns 0ps 0ps 10ns 10ns) DC 0
+
+.subckt inv y x vdd gnd
+M1 y x gnd gnd CMOSN W={Wn} L={2*LAMBDA}
++ AS={5*Wn*LAMBDA} PS={10*LAMBDA+2*Wn} 
++ AD={5*Wn*LAMBDA} PD={10*LAMBDA+2*Wn}
+
+M2 y x vdd vdd CMOSP W={Wp} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+.ends inv
+
+.subckt or_with_inv y x1 x2 vdd gnd
+* NOR section
+M1 n1 x1 n2 vdd CMOSP W={2*Wp} L={2*LAMBDA}
++ AS={10*Wp*LAMBDA} PS={10*LAMBDA+4*Wp}
++ AD={10*Wp*LAMBDA} PD={10*LAMBDA+4*Wp}
+
+M2 n2 x2 vdd vdd CMOSP W={2*Wp} L={2*LAMBDA}
++ AS={10*Wp*LAMBDA} PS={10*LAMBDA+4*Wp}
++ AD={10*Wp*LAMBDA} PD={10*LAMBDA+4*Wp}
+
+M3 n1 x1 gnd gnd CMOSN W={Wn} L={2*LAMBDA}
++ AS={5*Wn*LAMBDA} PS={10*LAMBDA+2*Wn}
++ AD={5*Wn*LAMBDA} PD={10*LAMBDA+2*Wn}
+
+M4 n1 x2 gnd gnd CMOSN W={Wn} L={2*LAMBDA}
++ AS={5*Wn*LAMBDA} PS={10*LAMBDA+2*Wn}
++ AD={5*Wn*LAMBDA} PD={10*LAMBDA+2*Wn}
+
+* Inverter section
+M5 y n1 gnd gnd CMOSN W={Wn} L={2*LAMBDA}
++ AS={5*Wn*LAMBDA} PS={10*LAMBDA+2*Wn}
++ AD={5*Wn*LAMBDA} PD={10*LAMBDA+2*Wn}
+
+M6 y n1 vdd vdd CMOSP W={Wp} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+.ends or_with_inv
+
+.subckt and_with_inv y x1 x2 vdd gnd
+* NAND section
+M1 n1 x1 vdd vdd CMOSP W={Wp} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+
+M2 n1 x2 vdd vdd CMOSP W={Wp} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+
+M3 n1 x1 n2 gnd CMOSN W={2*Wn} L={2*LAMBDA}
++ AS={10*Wn*LAMBDA} PS={10*LAMBDA+4*Wn}
++ AD={10*Wn*LAMBDA} PD={10*LAMBDA+4*Wn}
+
+M4 n2 x2 gnd gnd CMOSN W={2*Wn} L={2*LAMBDA}
++ AS={10*Wn*LAMBDA} PS={10*LAMBDA+4*Wn}
++ AD={10*Wn*LAMBDA} PD={10*LAMBDA+4*Wn}
+
+* Inverter section
+M5 y n1 gnd gnd CMOSN W={2*Wn} L={2*LAMBDA}
++ AS={5*Wn*LAMBDA} PS={10*LAMBDA+2*Wn}
++ AD={5*Wn*LAMBDA} PD={10*LAMBDA+2*Wn}
+
+M6 y n1 vdd vdd CMOSP W={2*Wp} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+.ends and_with_inv
+
+.subckt xor_new n2 x1 x2 vdd gnd
+M1 n1 x2 vdd vdd CMOSP W={Wp} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+
+M2 n1 x2 gnd gnd CMOSN W={Wn} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+
+M3 n2 x1 x2 vdd CMOSP W={Wp} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+
+M4 n2 x1 n1 gnd CMOSN W={Wn} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+
+M5 n3 x1 n1 vdd CMOSP W={Wp} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+
+M6 n3 x1 x2 gnd CMOSN W={Wn} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+
+M7 x1 x2 n2 vdd CMOSP W={Wp} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+
+M8 n3 x2 x1 gnd CMOSN W={Wn} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+
+M9 n3 n2 vdd vdd CMOSP W={Wp} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+
+M10 n2 n3 gnd gnd CMOSN W={Wn} L={2*LAMBDA}
++ AS={5*Wp*LAMBDA} PS={10*LAMBDA+2*Wp}
++ AD={5*Wp*LAMBDA} PD={10*LAMBDA+2*Wp}
+.ends xor_new
+
+xa1 g1 a1 b1 vdd gnd and_with_inv
+xa2 g2 a2 b2 vdd gnd and_with_inv
+xa3 g3 a3 b3 vdd gnd and_with_inv
+xa4 g4 a4 b4 vdd gnd and_with_inv
+xx1 p1 a1 b1 vdd gnd xor_new
+xx2 p2 a2 b2 vdd gnd xor_new
+xx3 p3 a3 b3 vdd gnd xor_new
+xx4 p4 a4 b4 vdd gnd xor_new
+xa5 n1 p1 c1 vdd gnd and_with_inv
+xx5 s1 p1 c1 vdd gnd xor_new
+xo1 c2 g1 n1 vdd gnd or_with_inv
+xa6 n2 p2 c2 vdd gnd and_with_inv
+xx6 s2 p2 c2 vdd gnd xor_new
+xo2 c3 g2 n2 vdd gnd or_with_inv
+xa7 n3 p3 c3 vdd gnd and_with_inv
+xx7 s3 p3 c3 vdd gnd xor_new
+xo3 c4 g3 n3 vdd gnd or_with_inv
+xa8 n4 p4 c4 vdd gnd and_with_inv  
+xx8 s4 p4 c4 vdd gnd xor_new
+xo4 cout g4 n4 vdd gnd or_with_inv
+
+.tran 0.1n 10n
+
+
+.control
+set hcopypscolor = 1
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=green
+set color5=yellow
+set color6=orange
+set color7=purple
+
+
+run
+plot v(a1) v(a2)+2 v(a3)+4 v(a4)+6
+plot v(b1) v(b2)+2 v(b3)+4 v(b4)+6
+plot v(s1) v(s2)+2 v(s3)+4 v(s4)+6 v(cout)+8
+.endc

@@ -1,0 +1,100 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.global gnd vdd
+
+* Supply
+Vdd vdd gnd 'SUPPLY'
+
+* SPICE3 file created from dflipflop.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 gnd a_73_n32# a_99_n61# Gnd CMOSN w=20 l=2
++  ad=300 pd=160 as=200 ps=100
+M1001 a_13_n52# clk a_6_n77# w_0_n58# CMOSP w=40 l=2
++  ad=400 pd=180 as=200 ps=90
+M1002 a_43_n52# clk dmid w_30_n58# CMOSP w=40 l=2
++  ad=400 pd=180 as=200 ps=90
+M1003 a_73_n32# clk a_66_n61# Gnd CMOSN w=20 l=2
++  ad=100 pd=50 as=200 ps=100
+M1004 a_13_n52# D vdd w_0_n58# CMOSP w=40 l=2
++  ad=0 pd=0 as=600 ps=280
+M1005 gnd D a_6_n77# Gnd CMOSN w=10 l=2
++  ad=0 pd=0 as=50 ps=30
+M1006 dlatched a_73_n32# vdd w_93_22# CMOSP w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1007 gnd a_6_n77# dmid Gnd CMOSN w=10 l=2
++  ad=0 pd=0 as=50 ps=30
+M1008 gnd dmid a_66_n61# Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1009 a_73_n32# dmid vdd w_60_22# CMOSP w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1010 dlatched clk a_99_n61# Gnd CMOSN w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1011 a_43_n52# a_6_n77# vdd w_30_n58# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 w_0_n58# a_13_n52# 0.15fF
+C1 a_6_n77# w_30_n58# 0.14fF
+C2 clk a_66_n61# 0.05fF
+C3 vdd a_73_n32# 0.23fF
+C4 clk a_6_n77# 0.35fF
+C5 gnd D 0.22fF
+C6 w_0_n58# D 0.14fF
+C7 dmid w_60_22# 0.06fF
+C8 clk a_13_n52# 0.15fF
+C9 a_66_n61# a_73_n32# 0.21fF
+C10 a_6_n77# vdd 0.05fF
+C11 dmid gnd 0.21fF
+C12 dlatched a_99_n61# 0.21fF
+C13 dlatched w_93_22# 0.04fF
+C14 a_43_n52# dmid 0.85fF
+C15 a_99_n61# gnd 0.21fF
+C16 vdd a_13_n52# 0.41fF
+C17 clk D 0.14fF
+C18 dmid w_30_n58# 0.06fF
+C19 a_43_n52# w_30_n58# 0.15fF
+C20 clk dlatched 0.06fF
+C21 a_6_n77# a_13_n52# 0.76fF
+C22 vdd D 0.05fF
+C23 clk w_0_n58# 0.35fF
+C24 clk dmid 0.22fF
+C25 clk a_43_n52# 0.15fF
+C26 vdd w_60_22# 0.06fF
+C27 a_73_n32# w_60_22# 0.04fF
+C28 clk a_99_n61# 0.04fF
+C29 dlatched vdd 0.23fF
+C30 dlatched a_73_n32# 0.05fF
+C31 clk w_30_n58# 0.35fF
+C32 gnd a_73_n32# 0.05fF
+C33 a_6_n77# D 0.05fF
+C34 w_0_n58# vdd 0.09fF
+C35 dmid a_73_n32# 0.05fF
+C36 a_43_n52# vdd 0.41fF
+C37 a_99_n61# a_73_n32# 0.34fF
+C38 vdd w_93_22# 0.06fF
+C39 a_73_n32# w_93_22# 0.06fF
+C40 a_13_n52# D 0.05fF
+C41 a_66_n61# gnd 0.21fF
+C42 w_30_n58# vdd 0.09fF
+C43 a_6_n77# gnd 0.52fF
+C44 a_66_n61# dmid 0.34fF
+C45 w_0_n58# a_6_n77# 0.06fF
+C46 a_6_n77# dmid 0.44fF
+C47 a_43_n52# a_6_n77# 0.05fF
+C48 clk a_73_n32# 0.32fF
+C49 gnd Gnd 0.26fF
+C50 a_99_n61# Gnd 0.08fF
+C51 a_66_n61# Gnd 0.08fF
+C52 clk Gnd 0.14fF
+C53 dlatched Gnd 0.15fF
+C54 a_43_n52# Gnd 0.00fF
+C55 a_13_n52# Gnd 0.00fF
+C56 vdd Gnd 0.29fF
+C57 a_73_n32# Gnd 0.69fF
+C58 dmid Gnd 0.25fF
+C59 a_6_n77# Gnd 0.51fF
+C60 D Gnd 0.44fF
+C61 w_93_22# Gnd 0.77fF
+C62 w_60_22# Gnd 0.77fF
+C63 w_30_n58# Gnd 1.47fF
+C64 w_0_n58# Gnd 1.47fF

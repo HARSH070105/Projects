@@ -1,0 +1,41 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.global gnd vdd
+
+* Supply
+Vdd vdd gnd 'SUPPLY'
+
+* SPICE3 file created from nand.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 gnd in2 a_6_n11# Gnd CMOSN w=10 l=2
++  ad=50 pd=30 as=100 ps=60
+M1001 out in1 a_6_n11# Gnd CMOSN w=10 l=2
++  ad=50 pd=30 as=0 ps=0
+M1002 vdd in2 out w_0_27# CMOSP w=20 l=2
++  ad=200 pd=100 as=200 ps=100
+M1003 out in1 vdd w_0_27# CMOSP w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 a_6_n11# gnd 0.10fF
+C1 in1 out 0.05fF
+C2 in2 out 0.26fF
+C3 vdd w_0_27# 0.13fF
+C4 in1 w_0_27# 0.06fF
+C5 in2 gnd 0.26fF
+C6 in2 w_0_27# 0.06fF
+C7 out w_0_27# 0.09fF
+C8 in1 a_6_n11# 0.04fF
+C9 a_6_n11# in2 0.05fF
+C10 in1 vdd 0.02fF
+C11 vdd in2 0.02fF
+C12 a_6_n11# out 0.10fF
+C13 in1 in2 0.02fF
+C14 vdd out 0.41fF
+C15 gnd Gnd 0.18fF
+C16 a_6_n11# Gnd 0.06fF
+C17 out Gnd 0.14fF
+C18 vdd Gnd 0.10fF
+C19 in2 Gnd 1.04fF
+C20 in1 Gnd 0.15fF
+C21 w_0_27# Gnd 1.37fF
